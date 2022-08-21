@@ -1,18 +1,27 @@
-<?php
-
+<?
 function maxZeros($N)
 {
-	$maxm = -1; 	// longest consecutive 0's
-  $cnt = 0;       // temporary counter
-
-	while ( $N ) {
-     $cnt = !($N & 1) ? $cnt +1 : 0; //count zeroes
-     $maxm = max($maxm, $cnt);       
-     $N >>= 1;                       //next element  
+	$maxm = 0;
+	$cnt = 0;
+    
+    $pre = $N & 1; //first
+    $N >>= 1;     //next
+    
+	while ($N) {
+		
+		if ( !($N & 1) && $pre ) { //if prev == 1 && next == 0
+		  $cnt++;
+		}
+		
+		if( ($N & 1) && $cnt){ //counting zero, found 1
+			$maxm = max($maxm, $cnt);
+			$cnt = 0 ;
+            $pre = $N & 1;	
+		}
+						    
+		$N >>= 1;
 	}
 	return $maxm;
 }
 
- 
-	$N = 1115; 
-	echo "\nElem: " .  maxZeros($N) ."<br>\n...";
+?>
